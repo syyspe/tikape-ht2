@@ -1,0 +1,165 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package ht2.dao;
+
+import ht2.database.Database;
+import ht2.domain.Kysymys;
+import ht2.domain.Vastaus;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ *
+ * @author syyspe
+ */
+public class VastausDao {
+    private final Database db;
+
+    public VastausDao(Database db) {
+        this.db = db;
+    }
+    
+    public int getCount() throws SQLException {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+   
+        try {
+            conn = db.getConnection();
+            stmt = conn.prepareStatement("SELECT COUNT() FROM Vastaus");
+            rs = stmt.executeQuery();
+            
+            if(rs.next()) {
+                return rs.getInt(1);
+            }
+ 
+            return -1;
+        } finally {
+            if (rs != null) rs.close();
+            if (stmt != null) stmt.close();
+            if (conn != null) conn.close();
+        }
+    }
+    
+    public Vastaus findById(int id) throws SQLException {
+        Vastaus vastaus = null;
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            conn = db.getConnection();
+            stmt = conn.prepareStatement("SELECT * FROM Vastaus WHERE id=?");
+            stmt.setInt(1, id);
+            rs = stmt.executeQuery();
+            
+            if(rs.next()) {
+                vastaus = new Vastaus(
+                        rs.getInt("id"), 
+                        rs.getString("teksti"), 
+                        rs.getBoolean("oikein"),
+                        rs.getInt("kysymys_id")
+                );
+            }
+           
+            return vastaus;
+        } finally {
+            if(rs != null) rs.close();
+            if(stmt != null) stmt.close();
+            if(conn != null) conn.close();
+        }
+    }
+    
+    public List<Vastaus> findAll() throws SQLException {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        try  {
+            conn = db.getConnection();
+            stmt = conn.prepareStatement("SELECT * FROM Vastaus");
+            rs = stmt.executeQuery();
+          
+            List<Vastaus> vastaukset = new ArrayList<>();
+            
+            while(rs.next()) {
+                vastaukset.add(new Vastaus(
+                        rs.getInt("id"), 
+                        rs.getString("teksti"), 
+                        rs.getBoolean("oikein"),
+                        rs.getInt("kysymys_id")));
+            }
+            
+            return vastaukset;
+        } finally {
+            if(rs != null) rs.close();
+            if(stmt != null) stmt.close();
+            if(conn != null) conn.close();
+        }
+    }
+    
+    public List<Vastaus> findByQuestionId(int kysymysId) throws SQLException {
+         
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        
+        try  {
+            conn = db.getConnection();
+            stmt = conn.prepareStatement("SELECT * FROM Vastaus WHERE kysymys_id=?");
+            stmt.setInt(1, kysymysId);
+            rs = stmt.executeQuery();
+          
+            List<Vastaus> vastaukset = new ArrayList<>();
+            
+            while(rs.next()) {
+                vastaukset.add(new Vastaus(
+                        rs.getInt("id"), 
+                        rs.getString("teksti"), 
+                        rs.getBoolean("oikein"),
+                        rs.getInt("kysymys_id")));
+            }
+            
+            return vastaukset;
+        } finally {
+            if(rs != null) rs.close();
+            if(stmt != null) stmt.close();
+            if(conn != null) conn.close();
+        }
+    }
+    
+    public Vastaus add(Vastaus vastaus) throws SQLException {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet id = null;
+        try {
+            conn = db.getConnection();
+            stmt = conn.prepareStatement(
+                    "INSERT INTO Vastaus (teksti,oikein,kysymys_id) VALUES (?,?,?)",
+                    Statement.RETURN_GENERATED_KEYS);
+            stmt.setString(1, vastaus.getTeksti());
+            stmt.setBoolean(2, vastaus.getOikein());
+            stmt.setInt(3, vastaus.getKysymysId());
+            
+            int rowsAffected = stmt.executeUpdate();
+            id = stmt.getGeneratedKeys();
+            if(rowsAffected != 1 || !id.next()) {
+                throw new SQLException("Vastauksen lisääminen epäonnistui");
+            }
+            vastaus.setId(id.getInt(rowsAffected));
+            return vastaus;
+        } finally {
+            if(id != null) id.close();
+            if(stmt != null) stmt.close();
+            if(conn != null) conn.close();
+        }
+    }
+    
+}
