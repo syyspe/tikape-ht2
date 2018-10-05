@@ -117,10 +117,12 @@ public class HT2App {
             map.put("lisaa", "Lisää uusi kysymys");
             try {
                 List<Kysymys> kysymykset = kysymysDao.findAll();
+                List<Kurssi> kurssit = kurssiDao.findAll();
                 for (Kysymys kysymys : kysymykset) {
                     kysymys.setVastaukset(vastausDao.findByQuestionId(kysymys.getId()));
                 }
                 map.put("kysymykset", kysymykset);
+                map.put("kurssit", kurssit);
             } catch (SQLException e) {
                 System.out.println("e: " + e.getMessage());
             }

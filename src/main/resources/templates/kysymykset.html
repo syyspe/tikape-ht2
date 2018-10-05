@@ -62,11 +62,32 @@ and open the template in the editor.
                     </tr>
                 </tbody>   
             </table>
+            <h4 th:text="${lisaa}"></h4>
             <form method="POST" action="/kysymykset">
                 <div class="form-group">
-                    <label for="kysymysTeksti" th:text="${lisaa}">Lisää kysymys</label>
+                    <label for="kurssiSelect">Valitse kurssi</label>
+                    <select class="form-control" id="kurssiSelect">
+                        <option th:each="kurssi : ${kurssit}" th:text="${kurssi.nimi}"></option>
+                    </select>
+                </div>
+                <div class="form-group">
                     <input type="text" class="form-control" id="kysymysTeksti" aria-describedby="tekstiApu" placeholder="Kysymyksen teksti" name="teksti" />
                     <small id="tekstiApu" class="form-text text-muted">Anna kysymyksen teksti</small>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="vastaus1" aria-describedby="tekstiApu1" placeholder="Vastaus 1" name="vastaus1" />
+                    <input type="checkbox" name="vastaus_1" value="1">Vastaus 1 on oikein?</input>
+                    <small id="tekstiApu1" class="form-text text-muted">Vastaus 1</small>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="vastaus2" aria-describedby="tekstiApu2" placeholder="Vastaus 2" name="vastaus2" />
+                    <small id="tekstiApu2" class="form-text text-muted">Vastaus 2</small>
+                    <input type="checkbox" name="vastaus_2" value="1">Vastaus 2 on oikein?</input>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="vastaus3" aria-describedby="tekstiApu3" placeholder="Vastaus 3" name="vastaus3" />
+                    <small id="tekstiApu3" class="form-text text-muted">Vastaus 3</small>
+                    <input type="checkbox" name="vastaus_3" value="1">Vastaus 3 on oikein?</input>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
