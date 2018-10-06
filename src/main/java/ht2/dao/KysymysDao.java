@@ -32,7 +32,7 @@ public class KysymysDao {
    
         try {
             conn = db.getConnection();
-            stmt = conn.prepareStatement("SELECT COUNT() FROM Kysymys");
+            stmt = conn.prepareStatement("SELECT COUNT(*) FROM Kysymys");
             rs = stmt.executeQuery();
             
             if(rs.next()) {

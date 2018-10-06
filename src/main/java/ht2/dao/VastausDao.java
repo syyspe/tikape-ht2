@@ -34,7 +34,7 @@ public class VastausDao {
    
         try {
             conn = db.getConnection();
-            stmt = conn.prepareStatement("SELECT COUNT() FROM Vastaus");
+            stmt = conn.prepareStatement("SELECT COUNT(*) FROM Vastaus");
             rs = stmt.executeQuery();
             
             if(rs.next()) {

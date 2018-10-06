@@ -33,7 +33,7 @@ public class KurssiDao {
    
         try {
             conn = db.getConnection();
-            stmt = conn.prepareStatement("SELECT COUNT() FROM Kurssi");
+            stmt = conn.prepareStatement("SELECT COUNT(*) FROM Kurssi");
             rs = stmt.executeQuery();
             
             if(rs.next()) {

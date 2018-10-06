@@ -43,7 +43,7 @@ public class HT2App {
             HashMap map = new HashMap();
             map.put("otsake", "Hallinnoi kursseja, kysymyksiä ja vastauksia");
             try {
-                map.put("kursseja", "Palvelussa on tällä hetkellä " 
+                map.put("statistiikka", "Palvelussa on tällä hetkellä " 
                         + kurssiDao.getCount() + " kurssia, " 
                         + kysymysDao.getCount() + " kysymystä ja " 
                         + vastausDao.getCount() + " vastausta.");
