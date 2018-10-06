@@ -37,7 +37,7 @@ public class Database {
                 BufferedReader br = new BufferedReader(fr);
                 
                 while ((line = br.readLine()) != null) {
-                    System.out.println("line: ");
+                    System.out.println("line: " + line);
                 }
                 
             } catch (SQLException e) {
