@@ -125,11 +125,22 @@ public class KurssiDao {
     public void delete(int kurssiId) throws SQLException {
         Connection conn = null;
         PreparedStatement stmtKurssi = null, stmtKysymys = null, stmtVastaus = null;
-        ResultSet kysymykset = null, vastaukset = null; 
+        ResultSet kurssit = null, kysymykset = null; 
         try {
             int rowsAffected = -1;
             conn = db.getConnection();
             conn.setAutoCommit(false);
+            
+            stmtKurssi = conn.prepareStatement(
+                    "SELECT * FROM Kurssi WHERE kurssi_id=?");
+            stmtKurssi.setInt(1, kurssiId);
+            kurssit = stmtKurssi.executeQuery();
+            if(!kurssit.next()) {
+                kurssit.close();
+                stmtKurssi.close();
+                conn.close();
+                return;
+            }
             
             stmtKysymys = conn.prepareStatement("SELECT * from Kysymys WHERE kurssi_id =?");
             stmtKysymys.setInt(1, kurssiId);
@@ -157,14 +168,18 @@ public class KurssiDao {
             if(rowsAffected != 1) {
                 throw new SQLException("Kurssin poistaminen epäonnistui");
             }
-            System.out.println("Postettiin kurssi " + kurssiId);
+            System.out.println("Poistettiin kurssi " + kurssiId);
             conn.commit();
-            stmtVastaus.close();
-            stmtKysymys.close();
-            stmtKurssi.close();
-            conn.close();
+            if (kurssit != null) kurssit.close();
+            if (kysymykset != null) kysymykset.close();
+            if (stmtVastaus != null) stmtVastaus.close();
+            if (stmtKysymys != null) stmtKysymys.close();
+            if (stmtKurssi != null) stmtKurssi.close();
+            if (conn != null) conn.close();
              
         } catch (SQLException e) {
+            if (kurssit != null) kurssit.close();
+            if (kysymykset != null) kysymykset.close();
             if (stmtVastaus != null) stmtVastaus.close();
             if (stmtKysymys != null) stmtKysymys.close();
             if (stmtKurssi != null) stmtKurssi.close();
