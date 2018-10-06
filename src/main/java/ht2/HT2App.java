@@ -38,7 +38,7 @@ public class HT2App {
             db.initDb();
         
         } catch (SQLException e) {
-            System.out.println("Database connection/initialization failed, exiting.");
+            System.out.println("Database connection/initialization failed: " + e.getMessage());
             System.exit(1);
         }
         KurssiDao kurssiDao = new KurssiDao(db);
