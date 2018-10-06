@@ -146,7 +146,7 @@ public class VastausDao {
                     Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, vastaus.getTeksti());
             stmt.setBoolean(2, vastaus.getOikein());
-            stmt.setInt(3, vastaus.getKysymysId());
+            stmt.setInt(3, vastaus.getKysymys_id());
             
             int rowsAffected = stmt.executeUpdate();
             id = stmt.getGeneratedKeys();

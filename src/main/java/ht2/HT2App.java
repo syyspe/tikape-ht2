@@ -33,7 +33,14 @@ public class HT2App {
            Spark.port(Integer.valueOf(System.getenv("PORT")));
         }
         
-        Database db = new Database("jdbc:sqlite:ht2.db");
+        try {
+            Database db = new Database("jdbc:sqlite:ht2.db");
+            db.initDb();
+        
+        } catch (SQLException e) {
+            System.out.println("Database connection/initialization failed, exiting.");
+            System.exit(1);
+        }
         KurssiDao kurssiDao = new KurssiDao(db);
         KysymysDao kysymysDao = new KysymysDao(db);
         VastausDao vastausDao = new VastausDao(db);
@@ -69,7 +76,7 @@ public class HT2App {
                 for (Kurssi kurssi : kurssit) {
                     kurssi.setKysymykset(
                             kysymykset.stream()
-                                    .filter(k -> k.getKurssiId() == kurssi.getId())
+                                    .filter(k -> k.getKurssi_id() == kurssi.getId())
                                     .collect(Collectors.toList()));
                 }
                 map.put("kurssit", kurssit);
@@ -129,6 +136,11 @@ public class HT2App {
             return new ModelAndView(map, "kysymykset");
         }, new ThymeleafTemplateEngine());
         
+        Spark.post("/kysymykset", (req, res) -> {
+            res.type("application/json");
+            
+            return "";
+        });
         
     }
 }

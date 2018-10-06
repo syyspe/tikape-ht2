@@ -34,13 +34,25 @@ public class Vastaus {
         return oikein;
     }
 
-    public int getKysymysId() {
+    public int getKysymys_id() {
         return kysymys_id;
     }
 
     public void setId(int id) {
         this.id = id;
     }
-    
+
+    public void setTeksti(String teksti) {
+        this.teksti = teksti;
+    }
+
+    public void setOikein(Boolean oikein) {
+        this.oikein = oikein;
+    }
+
+    public void setKysymys_id(int kysymys_id) {
+        this.kysymys_id = kysymys_id;
+    }
+     
    
 }

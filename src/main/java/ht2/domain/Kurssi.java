@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class Kurssi {
     private int id;
-    private final String nimi;
+    private String nimi;
     private List<Kysymys> kysymykset;
 
     public Kurssi(int id, String nimi, List<Kysymys> kysymykset) {
@@ -30,14 +30,18 @@ public class Kurssi {
         return nimi;
     }
 
+    public List<Kysymys> getKysymykset() {
+        return kysymykset;
+    }
+    
     public void setId(int id) {
         this.id = id;
     }
 
-    public List<Kysymys> getKysymykset() {
-        return kysymykset;
+     public void setNimi(String nimi) {
+        this.nimi = nimi;
     }
-
+     
     public void setKysymykset(List<Kysymys> kysymykset) {
         this.kysymykset = kysymykset;
     }

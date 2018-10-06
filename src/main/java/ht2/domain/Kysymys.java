@@ -38,14 +38,6 @@ public class Kysymys {
         return teksti;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getKurssiId() {
-        return kurssi_id;
-    }
-    
     public int getKurssi_id() {
         return kurssi_id;
     }
@@ -53,13 +45,25 @@ public class Kysymys {
     public List<Vastaus> getVastaukset() {
         return vastaukset;
     }
+    
+    public void setId(int id) {
+        this.id = id;
+    }
 
+    public void setAihe(String aihe) {
+        this.aihe = aihe;
+    }
+
+    public void setTeksti(String teksti) {
+        this.teksti = teksti;
+    }
+
+    public void setKurssi_id(int kurssi_id) {
+        this.kurssi_id = kurssi_id;
+    }
+   
     public void setVastaukset(List<Vastaus> vastaukset) {
         this.vastaukset = vastaukset;
     }
-
-  
-    
-    
-    
+ 
 }

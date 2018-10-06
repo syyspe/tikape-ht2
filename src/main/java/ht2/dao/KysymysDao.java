@@ -147,7 +147,7 @@ public class KysymysDao {
                     Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, kysymys.getAihe());
             stmt.setString(2, kysymys.getTeksti());
-            stmt.setInt(3, kysymys.getKurssiId());
+            stmt.setInt(3, kysymys.getKurssi_id());
             
             int rowsAffected = stmt.executeUpdate();
             id = stmt.getGeneratedKeys();
