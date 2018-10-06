@@ -49,6 +49,10 @@ public class HT2App {
                         + vastausDao.getCount() + " vastausta.");
             } catch (SQLException e) {
                 System.out.println("e: " + e.getMessage());
+                map.clear();
+                map.put("otsake", "Virhe");
+                map.put("virhe", "SQL: " + e.getMessage());
+                return new ModelAndView(map, "error");
             }
             return new ModelAndView(map, "index");
         }, new ThymeleafTemplateEngine());
@@ -75,21 +79,33 @@ public class HT2App {
                 map.put("kurssit", kurssit);
             } catch (SQLException e) {
                 System.out.println("e: " + e.getMessage());
+                map.clear();
+                map.put("otsake", "Virhe");
+                map.put("virhe", "SQL: " + e.getMessage());
+                return new ModelAndView(map, "error");
             }
             return new ModelAndView(map, "kurssit");
         }, new ThymeleafTemplateEngine());
         
+        Spark.get("/error", (req, res) -> {
+            HashMap map = new HashMap();
+            map.put("otsake", "Odottamaton virhe");
+            map.put("virhe", "Jotain meni pieleen :(");
+            return new ModelAndView(map, "error");
+        }, new ThymeleafTemplateEngine());
+        
         Spark.post("/kurssit", (req, res) -> {
             String nimi = req.queryParams("nimi");
-            if (nimi == null || nimi.length() == 0) {
-                // TODO: error messages
-                res.redirect("/kurssit");
+            if (nimi == null || nimi.length() == 0 || nimi.length() > 256) {
+                res.redirect("/error");
                 return "";
             }
             try {
                 kurssiDao.add(new Kurssi(-1, nimi, null));
             } catch (SQLException e) {
                 System.out.println("e: " + e.getMessage());
+                res.redirect("/error");
+                return "";
             }
             res.redirect("/kurssit");
             return "";
@@ -101,14 +117,16 @@ public class HT2App {
                 kurssiDao.delete(kurssiId);
             } catch (SQLException e) {
                 System.out.println("e: " + e.getMessage());
-                
+                res.redirect("/error");
+                return "";
             } catch (Exception e) {
                 System.out.println("e: " + e.getMessage());
-                
-            } finally {
-               res.redirect("/kurssit");
-               return ""; 
+                res.redirect("/error");
+                return "";
             }
+            
+            res.redirect("/kurssit");
+            return ""; 
         });
         
         Spark.get("/kysymykset", (req, res) -> {
@@ -125,6 +143,10 @@ public class HT2App {
                 map.put("kurssit", kurssit);
             } catch (SQLException e) {
                 System.out.println("e: " + e.getMessage());
+                map.clear();
+                map.put("otsake", "Virhe");
+                map.put("virhe", "SQL: " + e.getMessage());
+                return new ModelAndView(map, "error");
             }
             return new ModelAndView(map, "kysymykset");
         }, new ThymeleafTemplateEngine());
@@ -136,7 +158,8 @@ public class HT2App {
                 Integer kurssi_id = Integer.parseInt(req.queryParams("kurssi"));
 
                 if (teksti == null
-                        || teksti.length() < 1
+                        || aihe.length() > 256
+                        || teksti.length() < 1 || teksti.length() > 1024
                         || kurssi_id == null
                         || kurssiDao.findById(kurssi_id) == null) {
                     res.redirect("/kysymykset");
@@ -157,7 +180,7 @@ public class HT2App {
 
                 for (int i = 1; i < 4; i++) {
                     v_teksti = req.queryParams("v" + i + "_teksti");
-                    if (v_teksti != null && v_teksti.length() > 0) {
+                    if (v_teksti != null && v_teksti.length() > 0 && v_teksti.length() < 1025) {
                         v_oikein = req.queryParams("v" + i + "_oikein");
                         oikein = v_oikein == null || v_oikein.length() < 1 ? false : true;
                         vastaukset.add(new Vastaus(-1, v_teksti, oikein, -1));
@@ -169,8 +192,27 @@ public class HT2App {
             
             } catch (SQLException e) {
                 System.out.println("SQL: " + e.getMessage());
+                res.redirect("/error");
+                return "";
             } 
             
+            res.redirect("/kysymykset");
+            return "";
+        });
+        
+        Spark.post("/kysymys/:id/poista", (req, res) -> {
+            try {
+                Integer kysymysId = Integer.parseInt(req.params(":id"));
+                kysymysDao.delete(kysymysId);
+            } catch (SQLException e) {
+                System.out.println("SQL: " + e.getMessage());
+                res.redirect("/error");
+                return "";
+            } catch (Exception e) {
+                System.out.println("Exc: " + e.getMessage());
+                res.redirect("/error");
+                return "";
+            }
             res.redirect("/kysymykset");
             return "";
         });

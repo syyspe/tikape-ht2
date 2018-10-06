@@ -31,14 +31,51 @@ and open the template in the editor.
         </header>
         <main role="main" class="container">
             <h3 style="padding-top: 70px" class="mt-5" th:text="${otsake}">otsake</h3>
+            <button style="padding-top: 10px" type="button" class="btn btn-primary" data-toggle="collapse" th:text="${lisaa}" data-target="#lisaaWrapper" aria-expanded="false" th:aria-controls="lisaaWrapper"></button>
+            <div style="padding-top: 10px; padding-bottom: 10px" class="collapse" id="lisaaWrapper">
+                <form method="POST" action="/kysymykset">
+                    <div class="form-group">
+                        <label for="kurssiSelect">Valitse kurssi</label>
+                        <select name="kurssi" class="form-control" id="kurssiSelect" aria-describedby="tekstiApu1">
+                            <option th:each="kurssi : ${kurssit}" th:text="${kurssi.nimi}" th:value="${kurssi.id}"></option>
+                        </select>
+                        <small id="tekstiApu1" class="form-text text-muted">Valitse kurssi</small>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" maxlength="256" class="form-control" id="kysymysAihe" aria-describedby="tekstiApu2" placeholder="Kysymyksen aihe" name="aihe" />
+                        <small id="tekstiApu2" class="form-text text-muted">Anna kysymyksen aihe</small>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" maxlength="1024" class="form-control" id="kysymysTeksti" aria-describedby="tekstiApu3" placeholder="Kysymyksen teksti" name="teksti" />
+                        <small id="tekstiApu3" class="form-text text-muted">Anna kysymyksen teksti</small>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" maxlength="1024" class="form-control" id="vastaus1" aria-describedby="tekstiApu4" placeholder="Vastaus 1" name="v1_teksti" />
+                        <input type="checkbox" name="v1_oikein" value="1">Vastaus 1 on oikein?</input>
+                        <small id="tekstiApu4" class="form-text text-muted">Anna vastaus 1 teksti</small>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" maxlength="1024" class="form-control" id="vastaus2" aria-describedby="tekstiApu2" placeholder="Vastaus 2" name="v2_teksti" />
+                        <input type="checkbox" name="v2_oikein" value="1">Vastaus 2 on oikein?</input>
+                        <small id="tekstiApu2" class="form-text text-muted">Anna vastaus 2 teksti</small>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" maxlength="1024" class="form-control" id="vastaus3" aria-describedby="tekstiApu5" placeholder="Vastaus 3" name="v3_teksti" />
+                        <input type="checkbox" name="v3_oikein" value="1">Vastaus 3 on oikein?</input>
+                        <small id="tekstiApu5" class="form-text text-muted">Anna vastaus 3 teksti</small>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+            <br />
             <table class="table table-striped table-sm">
                 <thead class="thead-dark">
                     <tr>
                         <th style="width: 10%" scope="col">Kurssi id</th>
                         <th scope="col">Aihe</th>
                         <th style="width: 30%" scope="col">Kysymys</th>
-                        <th scope="col">Vastaukset</th>
-                        <th scope="col">Poista</th>
+                        <th style="width: 30%" scope="col">Vastaukset</th>
+                        <th style="text-align: center" scope="col">Poista kysymys</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -50,7 +87,7 @@ and open the template in the editor.
                             <table>
                                 <tr th:each="vastaus : ${kysymys.vastaukset}">
                                     <td>
-                                        <input type="text" th:value="${vastaus.teksti}" />
+                                        <div th:text="${vastaus.teksti}"></div>
                                     </td>
                                     <td>
                                         <i th:class="${vastaus.oikein} ? 'far fa-thumbs-up' : 'far fa-thumbs-down'"></i>
@@ -58,7 +95,7 @@ and open the template in the editor.
                                 </tr>
                             </table>
                         </td>
-                        <td >
+                        <td style="text-align: center">
                             <form method="POST" th:action="@{~/kysymys/{id}/poista(id=${kysymys.id})}">
                                 <button type="submit" class="btn btn-primary"><i class="fa fa-trash"></i></button>
                             </form>
@@ -66,40 +103,8 @@ and open the template in the editor.
                     </tr>
                 </tbody>   
             </table>
-            <h4 th:text="${lisaa}"></h4>
-            <form method="POST" action="/kysymykset">
-                <div class="form-group">
-                    <label for="kurssiSelect">Valitse kurssi</label>
-                    <select name="kurssi" class="form-control" id="kurssiSelect" aria-describedby="tekstiApu1">
-                        <option th:each="kurssi : ${kurssit}" th:text="${kurssi.nimi}" th:value="${kurssi.id}"></option>
-                    </select>
-                    <small id="tekstiApu1" class="form-text text-muted">Valitse kurssi</small>
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" id="kysymysAihe" aria-describedby="tekstiApu2" placeholder="Kysymyksen aihe" name="aihe" />
-                    <small id="tekstiApu2" class="form-text text-muted">Anna kysymyksen aihe</small>
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" id="kysymysTeksti" aria-describedby="tekstiApu3" placeholder="Kysymyksen teksti" name="teksti" />
-                    <small id="tekstiApu3" class="form-text text-muted">Anna kysymyksen teksti</small>
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" id="vastaus1" aria-describedby="tekstiApu4" placeholder="Vastaus 1" name="v1_teksti" />
-                    <input type="checkbox" name="v1_oikein" value="1">Vastaus 1 on oikein?</input>
-                    <small id="tekstiApu4" class="form-text text-muted">Anna vastaus 1 teksti</small>
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" id="vastaus2" aria-describedby="tekstiApu2" placeholder="Vastaus 2" name="v2_teksti" />
-                    <input type="checkbox" name="v2_oikein" value="1">Vastaus 2 on oikein?</input>
-                    <small id="tekstiApu2" class="form-text text-muted">Anna vastaus 2 teksti</small>
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" id="vastaus3" aria-describedby="tekstiApu5" placeholder="Vastaus 3" name="v3_teksti" />
-                    <input type="checkbox" name="v3_oikein" value="1">Vastaus 3 on oikein?</input>
-                    <small id="tekstiApu5" class="form-text text-muted">Anna vastaus 3 teksti</small>
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
+            
+            
         </main>
         <!-- bootstrap requirements -->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"  crossorigin="anonymous"></script>

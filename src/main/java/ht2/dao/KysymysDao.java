@@ -215,4 +215,51 @@ public class KysymysDao {
         }
     }
     
+    public void delete(int kysymysId) throws SQLException {
+        Connection conn = null;
+        PreparedStatement stmtKysymys = null, stmtVastaus = null;
+        ResultSet kysymykset = null;
+        try {
+            conn = db.getConnection();
+            conn.setAutoCommit(false);
+            stmtKysymys = conn.prepareStatement(
+                    "SELECT * FROM Kysymys WHERE id=?");
+            stmtKysymys.setInt(1, kysymysId);
+            kysymykset = stmtKysymys.executeQuery();
+            if(!kysymykset.next()) {
+                kysymykset.close();
+                stmtKysymys.close();
+                conn.close();
+                return;
+            }
+            
+            stmtVastaus = conn.prepareStatement(
+                    "DELETE FROM Vastaus WHERE kysymys_id=?");
+            stmtVastaus.setInt(1, kysymysId);
+            int rowsAffected = stmtVastaus.executeUpdate();
+            System.out.println("Poistettu " + rowsAffected + " vastausta");
+            
+            stmtKysymys.clearBatch();
+            stmtKysymys = conn.prepareStatement(
+                    "DELETE FROM Kysymys WHERE id=?");
+            stmtKysymys.setInt(1, kysymysId);
+            rowsAffected = stmtKysymys.executeUpdate();
+            System.out.println("Poistettu " + rowsAffected + " kpl kysymyksiä");
+            
+            conn.commit();
+            kysymykset.close();
+            stmtKysymys.close();
+            stmtVastaus.close();
+            conn.close();
+        } catch (SQLException e) {
+            if(conn != null) conn.rollback();
+            System.out.println("SQL: " + e.getMessage());
+            if (kysymykset != null) kysymykset.close();
+            if (stmtKysymys != null) stmtKysymys.close();
+            if (stmtVastaus != null) stmtVastaus.close();
+            if (conn != null) conn.close();
+            throw e;
+        }
+    }
+    
 }

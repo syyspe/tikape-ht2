@@ -35,8 +35,8 @@ and open the template in the editor.
                 <thead class="thead-dark">
                     <tr>
                         <th style="width: 30%" scope="col">Kurssi</th>
-                        <th scope="col">Kysymykset</th>
-                        <th scope="col">Poista</th>
+                        <th style="width: 30%" scope="col">Kysymykset</th>
+                        <th style="text-align: center" scope="col">Poista kurssi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -58,7 +58,7 @@ and open the template in the editor.
                                 </tr>
                             </table>
                         </td>
-                        <td >
+                        <td style="text-align: center">
                             <form method="POST" th:action="@{~/kurssi/{id}/poista(id=${kurssi.id})}">
                                 <button type="submit" class="btn btn-primary"><i class="fa fa-trash"></i></button>
                             </form>
