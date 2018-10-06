@@ -37,8 +37,9 @@ public class Database {
                 BufferedReader br = new BufferedReader(fr);
                 
                 while ((line = br.readLine()) != null) {
-                    System.out.println("line: " + line);
+                    System.out.print("line: " + line);
                     sql.add(line);
+                    System.out.println(" read");
                 }
                 
                 this.addData(sql);
@@ -61,17 +62,23 @@ public class Database {
     private void initDb() throws SQLException {
         Connection conn = this.getConnection();
         
-        PreparedStatement del3 = conn.prepareStatement("DROP TABLE Vastaus;");
+        PreparedStatement del3 = conn.prepareStatement("DROP TABLE IF EXISTS Vastaus;");
         del3.execute();
         del3.close();
         
-        PreparedStatement del2 = conn.prepareStatement("DROP TABLE Kysymys;");
+        System.out.println("initDb() Vastaus dropped");
+        
+        PreparedStatement del2 = conn.prepareStatement("DROP TABLE IF EXISTS Kysymys;");
         del2.execute();
         del2.close();
         
-        PreparedStatement del1 = conn.prepareStatement("DROP TABLE Kurssi;");
+        System.out.println("initDb() Kysymys dropped");
+        
+        PreparedStatement del1 = conn.prepareStatement("DROP TABLE IF EXISTS Kurssi;");
         del1.execute();
         del1.close();
+        
+        System.out.println("initDb() Kurssi dropped");
         
         PreparedStatement stmt1 = conn.prepareStatement(
                 "CREATE TABLE IF NOT EXISTS Kurssi (id SERIAL PRIMARY KEY,nimi varchar(256) NOT NULL);");
@@ -99,9 +106,11 @@ public class Database {
     private void addData(List<String> sql) throws SQLException {
         Connection conn = this.getConnection();
         for (String s : sql) {
+            System.out.print("addData() " + s);
             PreparedStatement stmt = conn.prepareStatement(s);
             stmt.execute();
             stmt.close();
+            System.out.println(" ...OK");
         }
         conn.close();
     }
