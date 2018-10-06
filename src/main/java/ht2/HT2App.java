@@ -32,15 +32,8 @@ public class HT2App {
         if (System.getenv("PORT") != null) {
            Spark.port(Integer.valueOf(System.getenv("PORT")));
         }
-        Database db = null;
-        try {
-            db = new Database("jdbc:sqlite:ht2.db");
-            db.initDb();
         
-        } catch (SQLException e) {
-            System.out.println("Database connection/initialization failed: " + e.getMessage());
-            System.exit(1);
-        }
+        Database db = new Database("jdbc:sqlite:ht2.db");
         KurssiDao kurssiDao = new KurssiDao(db);
         KysymysDao kysymysDao = new KysymysDao(db);
         VastausDao vastausDao = new VastausDao(db);
