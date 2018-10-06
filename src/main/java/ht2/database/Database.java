@@ -38,7 +38,10 @@ public class Database {
                 
                 while ((line = br.readLine()) != null) {
                     System.out.println("line: " + line);
+                    sql.add(line);
                 }
+                
+                this.addData(sql);
                 
             } catch (SQLException e) {
                 System.out.println("SQL: " + e.getMessage());
