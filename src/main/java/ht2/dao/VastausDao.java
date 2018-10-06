@@ -162,4 +162,24 @@ public class VastausDao {
         }
     }
     
+    public void delete(int id) throws SQLException {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        
+        try {
+            conn = db.getConnection();
+            stmt = conn.prepareStatement("DELETE FROM Vastaus WHERE id=?");
+            stmt.setInt(1, id);
+            
+            int rowsAffected = stmt.executeUpdate();
+            if(rowsAffected != 1) {
+                throw new SQLException("Vastauksen poistaminen epäonnistui");
+            }
+        
+        } finally {
+            if (stmt != null) stmt.close();
+            if (conn != null) conn.close();
+        }
+    }
+    
 }

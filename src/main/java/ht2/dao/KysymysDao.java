@@ -7,6 +7,7 @@ package ht2.dao;
 
 import ht2.database.Database;
 import ht2.domain.Kysymys;
+import ht2.domain.Vastaus;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -136,6 +137,57 @@ public class KysymysDao {
         }
     }
     
+    public Kysymys add(Kysymys kysymys, List<Vastaus> vastaukset) throws SQLException {
+        Connection conn = null;
+        PreparedStatement stmt_k = null, stmt_v = null;
+        ResultSet id = null;
+        
+        try {
+            conn = db.getConnection();
+            conn.setAutoCommit(false);
+            
+            stmt_k = conn.prepareStatement(
+                    "INSERT INTO Kysymys (aihe,teksti,kurssi_id) VALUES (?,?,?)",
+                    Statement.RETURN_GENERATED_KEYS);
+            stmt_k.setString(1, kysymys.getAihe());
+            stmt_k.setString(2, kysymys.getTeksti());
+            stmt_k.setInt(3, kysymys.getKurssi_id());
+            
+            int rowsAffected = stmt_k.executeUpdate();
+            id = stmt_k.getGeneratedKeys();
+            if(rowsAffected != 1 || !id.next()) {
+                throw new SQLException("Kysymyksen lisääminen epäonnistui");
+            }
+            kysymys.setId(id.getInt(1));
+            
+            stmt_v = conn.prepareStatement(
+                    "INSERT INTO Vastaus (teksti,oikein,kysymys_id) VALUES (?,?,?)");
+            for (Vastaus v : vastaukset) {
+                stmt_v.setString(1, v.getTeksti());
+                stmt_v.setBoolean(2, v.getOikein());
+                stmt_v.setInt(3, kysymys.getId());
+                rowsAffected = stmt_v.executeUpdate();
+                if(rowsAffected != 1) {
+                    throw new SQLException("Kysymyksen vastausten lisääminen epäonnistui");
+                }   
+            }
+            kysymys.setVastaukset(vastaukset);
+            conn.commit();
+            id.close();
+            stmt_k.close();
+            stmt_v.close();
+            conn.close();
+            return kysymys;
+        } catch (SQLException e) {
+            if (conn != null) conn.rollback();
+            if(id != null) id.close();
+            if(stmt_k != null) stmt_k.close();
+            if(stmt_v != null) stmt_v.close();
+            if(conn != null) conn.close();
+            throw e;
+        } 
+    }
+    
     public Kysymys add(Kysymys kysymys) throws SQLException {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -154,7 +206,7 @@ public class KysymysDao {
             if(rowsAffected != 1 || !id.next()) {
                 throw new SQLException("Kysymyksen lisääminen epäonnistui");
             }
-            kysymys.setId(id.getInt(rowsAffected));
+            kysymys.setId(id.getInt(1));
             return kysymys;
         } finally {
             if(id != null) id.close();

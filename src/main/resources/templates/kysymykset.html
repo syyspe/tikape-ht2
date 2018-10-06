@@ -10,7 +10,7 @@ and open the template in the editor.
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"  crossorigin="anonymous" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" />
     </head>
     <body>
         <header>
@@ -52,6 +52,9 @@ and open the template in the editor.
                                     <td>
                                         <input type="text" th:value="${vastaus.teksti}" />
                                     </td>
+                                    <td>
+                                        <i th:class="${vastaus.oikein} ? 'far fa-thumbs-up' : 'far fa-thumbs-down'"></i>
+                                    </td>
                                 </tr>
                             </table>
                         </td>
@@ -67,8 +70,8 @@ and open the template in the editor.
             <form method="POST" action="/kysymykset">
                 <div class="form-group">
                     <label for="kurssiSelect">Valitse kurssi</label>
-                    <select class="form-control" id="kurssiSelect" aria-describedby="tekstiApu1">
-                        <option th:each="kurssi : ${kurssit}" th:text="${kurssi.nimi}"></option>
+                    <select name="kurssi" class="form-control" id="kurssiSelect" aria-describedby="tekstiApu1">
+                        <option th:each="kurssi : ${kurssit}" th:text="${kurssi.nimi}" th:value="${kurssi.id}"></option>
                     </select>
                     <small id="tekstiApu1" class="form-text text-muted">Valitse kurssi</small>
                 </div>
@@ -81,18 +84,18 @@ and open the template in the editor.
                     <small id="tekstiApu3" class="form-text text-muted">Anna kysymyksen teksti</small>
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" id="vastaus1" aria-describedby="tekstiApu4" placeholder="Vastaus 1" name="vastaus1" />
-                    <input type="checkbox" name="vastaus_1" value="1">Vastaus 1 on oikein?</input>
+                    <input type="text" class="form-control" id="vastaus1" aria-describedby="tekstiApu4" placeholder="Vastaus 1" name="v1_teksti" />
+                    <input type="checkbox" name="v1_oikein" value="1">Vastaus 1 on oikein?</input>
                     <small id="tekstiApu4" class="form-text text-muted">Anna vastaus 1 teksti</small>
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" id="vastaus2" aria-describedby="tekstiApu2" placeholder="Vastaus 2" name="vastaus2" />
-                    <input type="checkbox" name="vastaus_2" value="1">Vastaus 2 on oikein?</input>
+                    <input type="text" class="form-control" id="vastaus2" aria-describedby="tekstiApu2" placeholder="Vastaus 2" name="v2_teksti" />
+                    <input type="checkbox" name="v2_oikein" value="1">Vastaus 2 on oikein?</input>
                     <small id="tekstiApu2" class="form-text text-muted">Anna vastaus 2 teksti</small>
                 </div>
                 <div class="form-group">
-                    <input type="text" class="form-control" id="vastaus3" aria-describedby="tekstiApu5" placeholder="Vastaus 3" name="vastaus3" />
-                    <input type="checkbox" name="vastaus_3" value="1">Vastaus 3 on oikein?</input>
+                    <input type="text" class="form-control" id="vastaus3" aria-describedby="tekstiApu5" placeholder="Vastaus 3" name="v3_teksti" />
+                    <input type="checkbox" name="v3_oikein" value="1">Vastaus 3 on oikein?</input>
                     <small id="tekstiApu5" class="form-text text-muted">Anna vastaus 3 teksti</small>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>

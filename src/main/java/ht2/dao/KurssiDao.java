@@ -124,23 +124,52 @@ public class KurssiDao {
     
     public void delete(int kurssiId) throws SQLException {
         Connection conn = null;
-        PreparedStatement stmt = null;
-         
+        PreparedStatement stmtKurssi = null, stmtKysymys = null, stmtVastaus = null;
+        ResultSet kysymykset = null, vastaukset = null; 
         try {
+            int rowsAffected = -1;
             conn = db.getConnection();
-            stmt = conn.prepareStatement(
+            conn.setAutoCommit(false);
+            
+            stmtKysymys = conn.prepareStatement("SELECT * from Kysymys WHERE kurssi_id =?");
+            stmtKysymys.setInt(1, kurssiId);
+            kysymykset = stmtKysymys.executeQuery();
+            
+            while (kysymykset.next()) {
+                System.out.println("Käsittelyssä kysymys " + kysymykset.getString("teksti"));
+                stmtVastaus = conn.prepareStatement("DELETE FROM Vastaus WHERE kysymys_id=?");
+                stmtVastaus.setInt(1, kysymykset.getInt("id"));
+                rowsAffected = stmtVastaus.executeUpdate();
+                stmtVastaus.clearBatch();
+                System.out.println("Poistettiin " + rowsAffected + " vastausta");
+            }
+            
+            stmtKysymys.clearBatch();
+            stmtKysymys = conn.prepareStatement("DELETE FROM Kysymys WHERE kurssi_id=?");
+            stmtKysymys.setInt(1, kurssiId);
+            rowsAffected = stmtKysymys.executeUpdate();
+            System.out.println("Poistettiin " + rowsAffected + " kysymystä");
+            
+            stmtKurssi = conn.prepareStatement(
                     "DELETE FROM Kurssi WHERE id=?");
-            stmt.setInt(1, kurssiId);
-            
-            int rowsAffected = stmt.executeUpdate();
-            
+            stmtKurssi.setInt(1, kurssiId);
+            rowsAffected = stmtKurssi.executeUpdate();
             if(rowsAffected != 1) {
                 throw new SQLException("Kurssin poistaminen epäonnistui");
             }
+            System.out.println("Postettiin kurssi " + kurssiId);
+            conn.commit();
+            stmtVastaus.close();
+            stmtKysymys.close();
+            stmtKurssi.close();
+            conn.close();
              
-        } finally {
-            if (stmt != null) stmt.close();
+        } catch (SQLException e) {
+            if (stmtVastaus != null) stmtVastaus.close();
+            if (stmtKysymys != null) stmtKysymys.close();
+            if (stmtKurssi != null) stmtKurssi.close();
             if (conn != null) conn.close();
+            throw e;
         }   
     }
     

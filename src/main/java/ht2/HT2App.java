@@ -11,15 +11,15 @@ import ht2.dao.KysymysDao;
 import ht2.dao.VastausDao;
 import ht2.database.Database;
 import ht2.domain.Kurssi;
-import ht2.domain.Kysymys;
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.List;
 import spark.ModelAndView;
 import spark.Spark;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
 import com.google.gson.Gson;
 import ht2.domain.Kysymys;
+import ht2.domain.Vastaus;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -130,8 +130,48 @@ public class HT2App {
         }, new ThymeleafTemplateEngine());
         
         Spark.post("/kysymykset", (req, res) -> {
-            res.type("application/json");
+            try {
+                String aihe = req.queryParams("aihe");
+                String teksti = req.queryParams("teksti");
+                Integer kurssi_id = Integer.parseInt(req.queryParams("kurssi"));
+
+                if (teksti == null
+                        || teksti.length() < 1
+                        || kurssi_id == null
+                        || kurssiDao.findById(kurssi_id) == null) {
+                    res.redirect("/kysymykset");
+                    return "";
+                }
+
+                Kysymys kysymys = new Kysymys(
+                        -1,
+                        aihe,
+                        teksti,
+                        kurssi_id,
+                        null);
+
+                Boolean oikein = false;
+                String v_teksti = null;
+                String v_oikein = null;
+                List<Vastaus> vastaukset = new ArrayList<>();
+
+                for (int i = 1; i < 4; i++) {
+                    v_teksti = req.queryParams("v" + i + "_teksti");
+                    if (v_teksti != null && v_teksti.length() > 0) {
+                        v_oikein = req.queryParams("v" + i + "_oikein");
+                        oikein = v_oikein == null || v_oikein.length() < 1 ? false : true;
+                        vastaukset.add(new Vastaus(-1, v_teksti, oikein, -1));
+                    }
+                }
+
+                kysymysDao.add(kysymys, vastaukset);
+                
             
+            } catch (SQLException e) {
+                System.out.println("SQL: " + e.getMessage());
+            } 
+            
+            res.redirect("/kysymykset");
             return "";
         });
         
