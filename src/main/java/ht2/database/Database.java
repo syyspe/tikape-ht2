@@ -60,6 +60,19 @@ public class Database {
     
     private void initDb() throws SQLException {
         Connection conn = this.getConnection();
+        
+        PreparedStatement del3 = conn.prepareStatement("DROP TABLE Vastaus;");
+        del3.execute();
+        del3.close();
+        
+        PreparedStatement del2 = conn.prepareStatement("DROP TABLE Kysymys;");
+        del2.execute();
+        del2.close();
+        
+        PreparedStatement del1 = conn.prepareStatement("DROP TABLE Kurssi;");
+        del1.execute();
+        del1.close();
+        
         PreparedStatement stmt1 = conn.prepareStatement(
                 "CREATE TABLE IF NOT EXISTS Kurssi (id SERIAL PRIMARY KEY,nimi varchar(256) NOT NULL);");
         stmt1.execute();
@@ -77,18 +90,6 @@ public class Database {
         
         System.out.println("initDb() Vastaus created");
         
-        PreparedStatement del3 = conn.prepareStatement("DELETE From Vastaus;");
-        del3.execute();
-        del3.close();
-        
-        PreparedStatement del2 = conn.prepareStatement("DELETE From Kysymys;");
-        del2.execute();
-        del2.close();
-        
-        PreparedStatement del1 = conn.prepareStatement("DELETE From Kurssi;");
-        del1.execute();
-        del1.close();
-       
         stmt1.close();
         stmt2.close();
         stmt3.close();
