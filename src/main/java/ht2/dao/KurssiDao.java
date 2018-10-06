@@ -132,7 +132,7 @@ public class KurssiDao {
             conn.setAutoCommit(false);
             
             stmtKurssi = conn.prepareStatement(
-                    "SELECT * FROM Kurssi WHERE kurssi_id=?");
+                    "SELECT * FROM Kurssi WHERE id=?");
             stmtKurssi.setInt(1, kurssiId);
             kurssit = stmtKurssi.executeQuery();
             if(!kurssit.next()) {
@@ -141,6 +141,8 @@ public class KurssiDao {
                 conn.close();
                 return;
             }
+            
+            stmtKurssi.clearBatch();
             
             stmtKysymys = conn.prepareStatement("SELECT * from Kysymys WHERE kurssi_id =?");
             stmtKysymys.setInt(1, kurssiId);
