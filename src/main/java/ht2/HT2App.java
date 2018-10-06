@@ -32,9 +32,9 @@ public class HT2App {
         if (System.getenv("PORT") != null) {
            Spark.port(Integer.valueOf(System.getenv("PORT")));
         }
-        
+        Database db = null;
         try {
-            Database db = new Database("jdbc:sqlite:ht2.db");
+            db = new Database("jdbc:sqlite:ht2.db");
             db.initDb();
         
         } catch (SQLException e) {
