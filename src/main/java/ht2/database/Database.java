@@ -92,7 +92,7 @@ public class Database {
         System.out.println("initDb() Kysymys created");
         
         PreparedStatement stmt3 = conn.prepareStatement(
-                "CREATE TABLE IF NOT EXISTS Vastaus (id SERIAL PRIMARY KEY,teksti varchar(1024) NOT NULL,oikein integer NOT NULL,kysymys_id integer NOT NULL,FOREIGN KEY(kysymys_id) REFERENCES Kysymys(id));");
+                "CREATE TABLE IF NOT EXISTS Vastaus (id SERIAL PRIMARY KEY,teksti varchar(1024) NOT NULL,oikein boolean NOT NULL,kysymys_id integer NOT NULL,FOREIGN KEY(kysymys_id) REFERENCES Kysymys(id));");
         stmt3.execute();
         
         System.out.println("initDb() Vastaus created");

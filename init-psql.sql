@@ -19,7 +19,7 @@ INSERT INTO Vastaus (teksti,oikein,kysymys_id) VALUES ('Koska kaikki luokat peri
 INSERT INTO Vastaus (teksti,oikein,kysymys_id) VALUES ('Koska kääntäjä osaa lisätä sen kaikille luokille',0,3);
 INSERT INTO Vastaus (teksti,oikein,kysymys_id) VALUES ('Nimeämään sarake kyselyn tuloksissa',1,4);
 INSERT INTO Vastaus (teksti,oikein,kysymys_id) VALUES ('Rajaamaan haettavia sarakkeita',0,4);
-INSERT INTO Vastaus (teksti,oikein,kysymys_id) VALUES ('Järjestämään haun tulokset aakkosjärjestykseen',1,4);
+INSERT INTO Vastaus (teksti,oikein,kysymys_id) VALUES ('Järjestämään haun tulokset aakkosjärjestykseen',0,4);
 INSERT INTO Vastaus (teksti,oikein,kysymys_id) VALUES ('ns. propsien avulla',1,5);
 INSERT INTO Vastaus (teksti,oikein,kysymys_id) VALUES ('HTML form elementtien kautta',0,5);
 INSERT INTO Vastaus (teksti,oikein,kysymys_id) VALUES ('Postikortilla',0,5);
