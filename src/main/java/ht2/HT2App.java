@@ -19,7 +19,6 @@ import spark.template.thymeleaf.ThymeleafTemplateEngine;
 import com.google.gson.Gson;
 import ht2.domain.Kysymys;
 import ht2.domain.Vastaus;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,7 +51,7 @@ public class HT2App {
                 e.printStackTrace();
                 map.clear();
                 map.put("otsake", "Virhe");
-                map.put("virhe", "SQL: " + e.getMessage());
+                map.put("virhe", "Pahoittelut, palvelussa tapahtui virhe :( Yritä uudelleen?");
                 return new ModelAndView(map, "error");
             }
             return new ModelAndView(map, "index");
@@ -82,7 +81,7 @@ public class HT2App {
                 System.out.println("e: " + e.getMessage());
                 map.clear();
                 map.put("otsake", "Virhe");
-                map.put("virhe", "SQL: " + e.getMessage());
+                map.put("virhe", "Pahoittelut, palvelussa taphtui virhe :( Yritä uudelleen?");
                 return new ModelAndView(map, "error");
             }
             return new ModelAndView(map, "kurssit");
@@ -146,7 +145,7 @@ public class HT2App {
                 System.out.println("e: " + e.getMessage());
                 map.clear();
                 map.put("otsake", "Virhe");
-                map.put("virhe", "SQL: " + e.getMessage());
+                map.put("virhe", "Pahoittelut, palvelussa taphtui virhe :( Yritä uudelleen?");
                 return new ModelAndView(map, "error");
             }
             return new ModelAndView(map, "kysymykset");
@@ -180,6 +179,7 @@ public class HT2App {
             
             } catch (SQLException e) {
                 System.out.println("SQL: " + e.getMessage());
+                e.printStackTrace();
                 e.printStackTrace();
                 res.redirect("/error");
                 return "";

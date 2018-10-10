@@ -36,7 +36,6 @@ public abstract class AbstractHt2Dao<T extends AbstractHt2Object> implements Dao
    
         try {
             conn = db.getConnection();
-            System.out.println("TABLENAME: " + tableName);
             stmt = conn.prepareStatement("SELECT COUNT(*) FROM " + tableName);
             rs = stmt.executeQuery();
             

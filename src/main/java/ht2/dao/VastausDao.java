@@ -6,7 +6,6 @@
 package ht2.dao;
 
 import ht2.database.Database;
-import ht2.domain.Kysymys;
 import ht2.domain.Vastaus;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -37,89 +36,8 @@ public class VastausDao extends AbstractHt2Dao<Vastaus> implements Dao<Vastaus, 
                         row.getInt("kysymys_id")
                 );
     }
-     /*
-    @Override
-    public int getCount() throws SQLException {
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-   
-        try {
-            conn = db.getConnection();
-            stmt = conn.prepareStatement("SELECT COUNT(*) FROM Vastaus");
-            rs = stmt.executeQuery();
-            
-            if(rs.next()) {
-                return rs.getInt(1);
-            }
- 
-            return -1;
-        } finally {
-            if (rs != null) rs.close();
-            if (stmt != null) stmt.close();
-            if (conn != null) conn.close();
-        }
-    }
     
-    @Override
-    public Vastaus findById(Integer id) throws SQLException {
-        Vastaus vastaus = null;
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        try {
-            conn = db.getConnection();
-            stmt = conn.prepareStatement("SELECT * FROM Vastaus WHERE id=?");
-            stmt.setInt(1, id);
-            rs = stmt.executeQuery();
-            
-            if(rs.next()) {
-                vastaus = new Vastaus(
-                        rs.getInt("id"), 
-                        rs.getString("teksti"), 
-                        rs.getBoolean("oikein"),
-                        rs.getInt("kysymys_id")
-                );
-            }
-           
-            return vastaus;
-        } finally {
-            if(rs != null) rs.close();
-            if(stmt != null) stmt.close();
-            if(conn != null) conn.close();
-        }
-    }
-    
-    @Override
-    public List<Vastaus> findAll() throws SQLException {
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        
-        try  {
-            conn = db.getConnection();
-            stmt = conn.prepareStatement("SELECT * FROM Vastaus");
-            rs = stmt.executeQuery();
-          
-            List<Vastaus> vastaukset = new ArrayList<>();
-            
-            while(rs.next()) {
-                vastaukset.add(new Vastaus(
-                        rs.getInt("id"), 
-                        rs.getString("teksti"), 
-                        rs.getBoolean("oikein"),
-                        rs.getInt("kysymys_id")));
-            }
-            
-            return vastaukset;
-        } finally {
-            if(rs != null) rs.close();
-            if(stmt != null) stmt.close();
-            if(conn != null) conn.close();
-        }
-    }*/
-    
-    public List<Vastaus> findByQuestionId(int kysymysId) throws SQLException {
+    public List<Vastaus> findByQuestionId(Integer kysymysId) throws SQLException {
          
         Connection conn = null;
         PreparedStatement stmt = null;

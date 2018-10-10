@@ -12,8 +12,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -31,82 +29,7 @@ public class KurssiDao extends AbstractHt2Dao<Kurssi> implements Dao<Kurssi, Int
     public Kurssi createFromRow(ResultSet row) throws SQLException {
         return new Kurssi(row.getInt("id"), row.getString("nimi"), null);
     }
-    
-    /*
-    @Override
-    public int getCount() throws SQLException {
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-   
-        try {
-            conn = db.getConnection();
-            stmt = conn.prepareStatement("SELECT COUNT(*) FROM Kurssi");
-            rs = stmt.executeQuery();
-            
-            if(rs.next()) {
-                return rs.getInt(1);
-            }
  
-            return -1;
-        } finally {
-            if (rs != null) rs.close();
-            if (stmt != null) stmt.close();
-            if (conn != null) conn.close();
-        }
-    }
-    
-    @Override
-    public Kurssi findById(Integer id) throws SQLException {
-        Kurssi kurssi = null;
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        
-        try {
-            conn = db.getConnection();
-            stmt = conn.prepareStatement("SELECT * FROM Kurssi WHERE id=?");
-            stmt.setInt(1, id);
-            rs = stmt.executeQuery();
-            
-            if(rs.next()) {
-                kurssi = new Kurssi(rs.getInt("id"), rs.getString("nimi"), null);
-            }
- 
-            return kurssi;
-        } finally {
-            if (rs != null) rs.close();
-            if (stmt != null) stmt.close();
-            if (conn != null) conn.close();
-        }
-    }
-    
-    @Override
-    public List<Kurssi> findAll() throws SQLException {
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        
-        try {
-            conn = db.getConnection();
-            stmt = conn.prepareStatement("SELECT * FROM Kurssi");
-            rs = stmt.executeQuery();
-            
-            List<Kurssi> kurssit = new ArrayList<>();
-             
-            while(rs.next()) { 
-                kurssit.add(new Kurssi(rs.getInt("id"), rs.getString("nimi"), null)); 
-            }
-            
-            return kurssit;
-           
-        } finally {
-            if (rs != null) rs.close();
-            if (stmt != null) stmt.close();
-            if (conn != null) conn.close();
-        }
-    } */
-    
     @Override
     public Kurssi add(Kurssi kurssi) throws SQLException {
         Connection conn = null;

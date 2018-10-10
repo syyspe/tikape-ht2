@@ -29,6 +29,7 @@ public class Database {
             // Init the db if this is production env (Heroku)
             try {
                 this.initDb();
+                /*
                 List<String> sql = new ArrayList<>();
                 String dataFile = "init-psql.sql";
                 String line = null;
@@ -42,7 +43,7 @@ public class Database {
                     System.out.println(" read");
                 }
                 
-                this.addData(sql);
+                this.addData(sql); */
                 
             } catch (SQLException e) {
                 System.out.println("SQL: " + e.getMessage());
@@ -59,9 +60,11 @@ public class Database {
         return DriverManager.getConnection(address);
     }
     
+    /*
     private void initDb() throws SQLException {
         Connection conn = this.getConnection();
         
+        PreparedStatement stmt
         PreparedStatement del3 = conn.prepareStatement("DROP TABLE IF EXISTS Vastaus;");
         del3.execute();
         del3.close();
@@ -101,9 +104,25 @@ public class Database {
         stmt2.close();
         stmt3.close();
         conn.close();
-    }
+    } */
     
-    private void addData(List<String> sql) throws SQLException {
+    private void initDb() throws SQLException, FileNotFoundException, IOException {
+        //List<String> sql = new ArrayList<>();
+        String dataFile = "init-psql.sql";
+        //String line = null;
+                
+        FileReader fr = new FileReader(dataFile);
+        BufferedReader br = new BufferedReader(fr);
+        
+        Connection conn = this.getConnection();
+        String line;
+        while ((line = br.readLine()) != null) {
+            System.out.print("initDb() - executing: " + line);
+            //sql.add(line);
+            conn.createStatement().execute(line);
+            System.out.println(" ...OK");
+        }
+        /*
         Connection conn = this.getConnection();
         for (String s : sql) {
             System.out.print("addData() " + s);
@@ -111,7 +130,7 @@ public class Database {
             stmt.execute();
             stmt.close();
             System.out.println(" ...OK");
-        }
+        } */
         conn.close();
     }
     
