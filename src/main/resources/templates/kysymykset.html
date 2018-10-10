@@ -31,7 +31,7 @@ and open the template in the editor.
         </header>
         <main role="main" class="container">
             <h3 style="padding-top: 70px" class="mt-5" th:text="${otsake}">otsake</h3>
-            <button style="padding-top: 10px" type="button" class="btn btn-primary" data-toggle="collapse" th:text="${lisaa}" data-target="#lisaaWrapper" aria-expanded="false" aria-controls="lisaaWrapper"></button>
+            <button style="padding-top: 10px" type="button" class="btn btn-outline-primary" data-toggle="collapse" th:text="${lisaa}" data-target="#lisaaWrapper" aria-expanded="false" aria-controls="lisaaWrapper"></button>
             <div style="padding-top: 10px; padding-bottom: 10px" class="collapse" id="lisaaWrapper">
                 <form method="POST" action="/kysymykset">
                     <div class="form-group">
@@ -49,7 +49,7 @@ and open the template in the editor.
                         <input type="text" maxlength="1024" class="form-control" id="kysymysTeksti" aria-describedby="tekstiApu3" placeholder="Kysymyksen teksti" name="teksti" />
                         <small id="tekstiApu3" class="form-text text-muted">Anna kysymyksen teksti</small>
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-outline-success"><i class="far fa-save"></i></button>
                 </form>
             </div>
             <br />
@@ -79,7 +79,7 @@ and open the template in the editor.
                                     </td>
                                     <td>
                                         <form method="POST" th:action="@{~/vastaus/{id}/poista(id=${vastaus.id})}">
-                                            <button type="submit" class="btn btn-primary"><i class="fa fa-trash"></i></button>
+                                            <button type="submit" class="btn btn-outline-danger"><i class="fa fa-trash"></i></button>
                                         </form>
                                     </td>
                                 </tr>
@@ -87,9 +87,9 @@ and open the template in the editor.
                                     <td>
                                         <form method="POST" th:action="@{~/kysymys/{id}/vastaus(id=${kysymys.id})}">
                                             <input type="text" maxlength="256" name="teksti" placeholder="Uusi vastaus"/>
-                                            <i class="fas fa-check" th:id="'rw' + ${kysymys.id}" onclick="toggleRightWrong(this)"></i>
+                                            <i style="cursor: pointer" class="fas fa-check" th:id="'rw' + ${kysymys.id}" onclick="toggleRightWrong(this)"></i>
                                             <input th:id="'rw' + ${kysymys.id} + 'oikein'" type="hidden" value="1" name="oikein" />
-                                            <button type="submit" class="btn btn-primary"><i class="far fa-save"></i></button>
+                                            <button  type="submit" class="btn btn-outline-success"><i class="far fa-save"></i></button>
                                         </form>
                                     </td>
                                     <td>
@@ -100,7 +100,7 @@ and open the template in the editor.
                         </td>
                         <td style="text-align: center">
                             <form method="POST" th:action="@{~/kysymys/{id}/poista(id=${kysymys.id})}">
-                                <button type="submit" class="btn btn-primary"><i class="fa fa-trash"></i></button>
+                                <button type="submit" class="btn btn-outline-danger"><i class="fa fa-trash"></i></button>
                             </form>
                         </td>
                     </tr>
