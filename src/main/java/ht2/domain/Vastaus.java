@@ -9,23 +9,21 @@ package ht2.domain;
  *
  * @author syyspe
  */
-public class Vastaus {
-    private int id;
+public class Vastaus extends AbstractHt2Object {
+    private Integer id;
     private String teksti;
     private Boolean oikein;
     private int kysymys_id;
 
-    public Vastaus(int id, String teksti, Boolean oikein, int kysymys_id) {
+    public Vastaus(Integer id, String teksti, Boolean oikein, int kysymys_id) {
+        super(id);
         this.id = id;
         this.teksti = teksti;
         this.oikein = oikein;
         this.kysymys_id = kysymys_id;
     }
 
-    public int getId() {
-        return id;
-    }
-
+  
     public String getTeksti() {
         return teksti;
     }
@@ -36,10 +34,6 @@ public class Vastaus {
 
     public int getKysymys_id() {
         return kysymys_id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public void setTeksti(String teksti) {

@@ -20,13 +20,25 @@ import java.util.List;
  *
  * @author syyspe
  */
-public class VastausDao {
+public class VastausDao extends AbstractHt2Dao<Vastaus> implements Dao<Vastaus, Integer>{
     private final Database db;
 
     public VastausDao(Database db) {
+        super(db, "Vastaus");
         this.db = db;
     }
-    
+
+    @Override
+    public Vastaus createFromRow(ResultSet row) throws SQLException {
+        return new Vastaus(
+                        row.getInt("id"), 
+                        row.getString("teksti"), 
+                        row.getBoolean("oikein"),
+                        row.getInt("kysymys_id")
+                );
+    }
+     /*
+    @Override
     public int getCount() throws SQLException {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -49,7 +61,8 @@ public class VastausDao {
         }
     }
     
-    public Vastaus findById(int id) throws SQLException {
+    @Override
+    public Vastaus findById(Integer id) throws SQLException {
         Vastaus vastaus = null;
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -77,6 +90,7 @@ public class VastausDao {
         }
     }
     
+    @Override
     public List<Vastaus> findAll() throws SQLException {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -103,7 +117,7 @@ public class VastausDao {
             if(stmt != null) stmt.close();
             if(conn != null) conn.close();
         }
-    }
+    }*/
     
     public List<Vastaus> findByQuestionId(int kysymysId) throws SQLException {
          
@@ -135,6 +149,7 @@ public class VastausDao {
         }
     }
     
+    @Override
     public Vastaus add(Vastaus vastaus) throws SQLException {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -162,7 +177,8 @@ public class VastausDao {
         }
     }
     
-    public void delete(int id) throws SQLException {
+    @Override
+    public void delete(Integer id) throws SQLException {
         Connection conn = null;
         PreparedStatement stmt = null;
         
@@ -181,5 +197,12 @@ public class VastausDao {
             if (conn != null) conn.close();
         }
     }
+
+    @Override
+    public Vastaus update(Vastaus object) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
+    
     
 }

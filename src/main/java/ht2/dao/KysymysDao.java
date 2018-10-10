@@ -20,12 +20,27 @@ import java.util.List;
  *
  * @author syyspe
  */
-public class KysymysDao {
+public class KysymysDao extends AbstractHt2Dao<Kysymys> implements Dao<Kysymys, Integer> {
     private final Database db;
 
     public KysymysDao(Database db) {
+        super(db, "Kysymys");
         this.db = db;
     }
+
+    @Override
+    public Kysymys createFromRow(ResultSet row) throws SQLException {
+        return new Kysymys(
+                        row.getInt("id"), 
+                        row.getString("aihe"), 
+                        row.getString("teksti"),
+                        row.getInt("kurssi_id"),
+                        null);
+    }
+    
+    
+    /*
+    @Override
     public int getCount() throws SQLException {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -48,7 +63,8 @@ public class KysymysDao {
         }
     }
     
-    public Kysymys findById(int id) throws SQLException {
+    @Override
+    public Kysymys findById(Integer id) throws SQLException {
         Kysymys kysymys = null;
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -77,6 +93,7 @@ public class KysymysDao {
         }
     }
     
+    @Override
     public List<Kysymys> findAll() throws SQLException {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -84,7 +101,7 @@ public class KysymysDao {
         
         try  {
             conn = db.getConnection();
-            stmt = conn.prepareStatement("SELECT * FROM Kysymys");
+            stmt = conn.prepareStatement("SELECT * FROM Kysymys ORDER BY kurssi_id, id DESC");
             rs = stmt.executeQuery();
           
             List<Kysymys> kysymykset = new ArrayList<>();
@@ -104,7 +121,7 @@ public class KysymysDao {
             if(stmt != null) stmt.close();
             if(conn != null) conn.close();
         }
-    }
+    } */
     
     public List<Kysymys> findByCourseId(int kurssiId) throws SQLException {
          
@@ -188,6 +205,7 @@ public class KysymysDao {
         } 
     }
     
+    @Override
     public Kysymys add(Kysymys kysymys) throws SQLException {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -215,7 +233,8 @@ public class KysymysDao {
         }
     }
     
-    public void delete(int kysymysId) throws SQLException {
+    @Override
+    public void delete(Integer kysymysId) throws SQLException {
         Connection conn = null;
         PreparedStatement stmtKysymys = null, stmtVastaus = null;
         ResultSet kysymykset = null;
@@ -261,5 +280,12 @@ public class KysymysDao {
             throw e;
         }
     }
+
+    @Override
+    public Kysymys update(Kysymys object) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); 
+    }
+    
+    
     
 }

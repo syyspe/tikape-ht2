@@ -49,6 +49,7 @@ public class HT2App {
                         + vastausDao.getCount() + " vastausta.");
             } catch (SQLException e) {
                 System.out.println("e: " + e.getMessage());
+                e.printStackTrace();
                 map.clear();
                 map.put("otsake", "Virhe");
                 map.put("virhe", "SQL: " + e.getMessage());
@@ -159,7 +160,8 @@ public class HT2App {
 
                 if (teksti == null
                         || aihe.length() > 256
-                        || teksti.length() < 1 || teksti.length() > 1024
+                        || teksti.length() < 1 
+                        || teksti.length() > 1024
                         || kurssi_id == null
                         || kurssiDao.findById(kurssi_id) == null) {
                     res.redirect("/kysymykset");
@@ -178,10 +180,12 @@ public class HT2App {
             
             } catch (SQLException e) {
                 System.out.println("SQL: " + e.getMessage());
+                e.printStackTrace();
                 res.redirect("/error");
                 return "";
             } catch (Exception e) {
                 System.out.println("Exc: " + e.getMessage());
+                e.printStackTrace();
                 res.redirect("/error");
                 return "";
             }
@@ -219,9 +223,13 @@ public class HT2App {
                     res.redirect("/error");
                     return "";
                 }
-                Boolean oikein = req.queryParams("oikein") == null 
-                        || req.queryParams("oikein").length() < 1 ? false : true;
-                vastausDao.add(new Vastaus(-1, teksti, oikein, kysymysId));
+                
+                String oikein = req.queryParams("oikein");
+                System.out.println("oikein: " + oikein);
+                if(oikein == null || oikein.length() < 1) {
+                    oikein = "0";
+                }
+                vastausDao.add(new Vastaus(-1, teksti, oikein.equals("1"), kysymysId));
                 
             } catch (SQLException e) {
                 System.out.println("SQL: " + e.getMessage());

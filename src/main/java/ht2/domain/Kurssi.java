@@ -11,20 +11,18 @@ import java.util.List;
  *
  * @author syyspe
  */
-public class Kurssi {
-    private int id;
+public class Kurssi extends AbstractHt2Object {
+    private Integer id;
     private String nimi;
     private List<Kysymys> kysymykset;
 
-    public Kurssi(int id, String nimi, List<Kysymys> kysymykset) {
+    public Kurssi(Integer id, String nimi, List<Kysymys> kysymykset) {
+        super(id);
         this.id = id;
         this.nimi = nimi;
         this.kysymykset = kysymykset;
     }
 
-    public int getId() {
-        return id;
-    }
 
     public String getNimi() {
         return nimi;
@@ -34,10 +32,6 @@ public class Kurssi {
         return kysymykset;
     }
     
-    public void setId(int id) {
-        this.id = id;
-    }
-
      public void setNimi(String nimi) {
         this.nimi = nimi;
     }

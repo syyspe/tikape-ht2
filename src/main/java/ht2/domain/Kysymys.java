@@ -11,23 +11,20 @@ import java.util.List;
  *
  * @author syyspe
  */
-public class Kysymys {
-    private int id;
+public class Kysymys extends AbstractHt2Object {
+    private Integer id;
     private String aihe;
     private String teksti;
     private int kurssi_id;
     private List<Vastaus> vastaukset;
 
-    public Kysymys(int id, String aihe, String teksti, int kurssi_id, List<Vastaus> vastaukset) {
+    public Kysymys(Integer id, String aihe, String teksti, int kurssi_id, List<Vastaus> vastaukset) {
+        super(id);
         this.id = id;
         this.aihe = aihe;
         this.teksti = teksti;
         this.kurssi_id = kurssi_id;
         this.vastaukset = vastaukset;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public String getAihe() {
@@ -46,10 +43,6 @@ public class Kysymys {
         return vastaukset;
     }
     
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public void setAihe(String aihe) {
         this.aihe = aihe;
     }

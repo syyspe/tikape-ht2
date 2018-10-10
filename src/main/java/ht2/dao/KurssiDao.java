@@ -19,13 +19,21 @@ import java.util.List;
  *
  * @author syyspe
  */
-public class KurssiDao {
+public class KurssiDao extends AbstractHt2Dao<Kurssi> implements Dao<Kurssi, Integer>{
     private final Database db;
 
     public KurssiDao(Database db) {
+        super(db, "Kurssi");
         this.db = db;
     }
+
+    @Override
+    public Kurssi createFromRow(ResultSet row) throws SQLException {
+        return new Kurssi(row.getInt("id"), row.getString("nimi"), null);
+    }
     
+    /*
+    @Override
     public int getCount() throws SQLException {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -48,7 +56,8 @@ public class KurssiDao {
         }
     }
     
-    public Kurssi findById(int id) throws SQLException {
+    @Override
+    public Kurssi findById(Integer id) throws SQLException {
         Kurssi kurssi = null;
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -72,6 +81,7 @@ public class KurssiDao {
         }
     }
     
+    @Override
     public List<Kurssi> findAll() throws SQLException {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -95,8 +105,9 @@ public class KurssiDao {
             if (stmt != null) stmt.close();
             if (conn != null) conn.close();
         }
-    }
+    } */
     
+    @Override
     public Kurssi add(Kurssi kurssi) throws SQLException {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -122,7 +133,8 @@ public class KurssiDao {
         }   
     }
     
-    public void delete(int kurssiId) throws SQLException {
+    @Override
+    public void delete(Integer kurssiId) throws SQLException {
         Connection conn = null;
         PreparedStatement stmtKurssi = null, stmtKysymys = null, stmtVastaus = null;
         ResultSet kurssit = null, kysymykset = null; 
@@ -188,6 +200,11 @@ public class KurssiDao {
             if (conn != null) conn.close();
             throw e;
         }   
+    }
+
+    @Override
+    public Kurssi update(Kurssi object) throws SQLException {
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
     
 }
