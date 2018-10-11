@@ -12,7 +12,7 @@ Sovellus löytyy tuolta
 ## [Kurssisivu](https://tikape-ht2.herokuapp.com/kurssit)
 
 Tällä sivulla palvelusta löytyvät kurssit ja niihin liittyvät kysymykset ovat taulukkomuodossa.
-HUOM. Jos joku on poistanut kaikki kurssit taulukko on tyhjä :-| -> Lisää uusia kursseja -> :-)
+**HUOM.** Jos joku on poistanut kaikki kurssit taulukko on tyhjä :-| -> Lisää uusia kursseja -> :-)
 
 * Klikkaa *Kysymykset* -sarakkeessa olevia kysymyksiä nähdäksesi tallennetut vastausvaihtoehdot
 * Voit lisätä kurssin klikkaamalla sinertäväää **Lisää kurssi** -nappia
