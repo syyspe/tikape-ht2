@@ -16,7 +16,7 @@ Tällä sivulla palvelusta löytyvät kurssit ja niihin liittyvät kysymykset ov
 
 * Klikkaa *Kysymykset* -sarakkeessa olevia kysymyksiä nähdäksesi tallennetut vastausvaihtoehdot
 * Voit lisätä kurssin klikkaamalla sinertäväää **Lisää kurssi** -nappia
-    * Anna kursille nimi ja tallenna klikkaamalla vihertävää levykettä
+    * Anna kursille nimi ja tallenna klikkaamalla vihertävää tallennusnappia (Levykkeen kuva)
 * Voit poistaa kurssin klikkaamalla punertavaa roskista **Poista kurssi** -sarakkeessa
     * Tämä poistaa myös kaikki kurssiin liittyvät kysymykset ja niiden vastaukset
 
@@ -39,7 +39,7 @@ Tällä sivulla voit lisätä/poistaa kysymyksiä ja vastauksia
 
 * Voit poistaa kysymykseltä vastausvaihtoehdon klikkaamalla punertavaa roskista vaihtoehdon oikealla puolella
 
-* Voit poistaa koko kysymyksn klikkaamalla punertavaa roskista **Poista kysymys** -sarakkeessa
+* Voit poistaa koko kysymyksen klikkaamalla punertavaa roskista **Poista kysymys** -sarakkeessa
     * Tämä poistaa myös kaikki kysymykseen liittyvät vastaukset
  
 
