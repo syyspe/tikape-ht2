@@ -9,7 +9,7 @@ Sovellus löytyy tuolta
 * Linkit kursseihin ja kysymys/vastauksiin löytyy navigaatiopötkylästä ylhäällä
 * Kertoo palvelun statistiikan
 
-## [Kurssisivu] (https://tikape-ht2.herokuapp.com/kurssit)
+## [Kurssisivu](https://tikape-ht2.herokuapp.com/kurssit)
 
 Tällä sivulla palvelusta löytyvät kurssit ja niihin liittyvät kysymykset ovat taulukkomuodossa.
 * Klikkaa *Kysymykset* sarakkeesa olevia kysymyksiä nähdäksesi tallennetut vastausvaihtoehdot
