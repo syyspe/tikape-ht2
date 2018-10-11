@@ -36,6 +36,11 @@ public class VastausDao extends AbstractHt2Dao<Vastaus> implements Dao<Vastaus, 
                         row.getInt("kysymys_id")
                 );
     }
+
+    @Override
+    public String getOrdering() {
+        return "";
+    }
     
     public List<Vastaus> findByQuestionId(Integer kysymysId) throws SQLException {
          

@@ -16,6 +16,7 @@ public class Kysymys extends AbstractHt2Object {
     private String aihe;
     private String teksti;
     private int kurssi_id;
+    private Kurssi kurssi;
     private List<Vastaus> vastaukset;
 
     public Kysymys(Integer id, String aihe, String teksti, int kurssi_id, List<Vastaus> vastaukset) {
@@ -25,6 +26,7 @@ public class Kysymys extends AbstractHt2Object {
         this.teksti = teksti;
         this.kurssi_id = kurssi_id;
         this.vastaukset = vastaukset;
+        this.kurssi = null;
     }
 
     public String getAihe() {
@@ -38,7 +40,15 @@ public class Kysymys extends AbstractHt2Object {
     public int getKurssi_id() {
         return kurssi_id;
     }
-    
+
+    public Kurssi getKurssi() {
+        return kurssi;
+    }
+
+    public void setKurssi(Kurssi kurssi) {
+        this.kurssi = kurssi;
+    }
+  
     public List<Vastaus> getVastaukset() {
         return vastaukset;
     }

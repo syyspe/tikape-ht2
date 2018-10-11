@@ -9,7 +9,7 @@ package ht2.domain;
  *
  * @author syyspe
  */
-public class AbstractHt2Object {
+public abstract class AbstractHt2Object {
     private Integer id;
 
     public AbstractHt2Object(Integer id) {

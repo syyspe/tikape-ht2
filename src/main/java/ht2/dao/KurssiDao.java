@@ -29,6 +29,13 @@ public class KurssiDao extends AbstractHt2Dao<Kurssi> implements Dao<Kurssi, Int
     public Kurssi createFromRow(ResultSet row) throws SQLException {
         return new Kurssi(row.getInt("id"), row.getString("nimi"), null);
     }
+
+    @Override
+    public String getOrdering() {
+        return "ORDER BY id DESC";
+    }
+    
+    
  
     @Override
     public Kurssi add(Kurssi kurssi) throws SQLException {
@@ -84,19 +91,16 @@ public class KurssiDao extends AbstractHt2Dao<Kurssi> implements Dao<Kurssi, Int
             kysymykset = stmtKysymys.executeQuery();
             
             while (kysymykset.next()) {
-                System.out.println("Käsittelyssä kysymys " + kysymykset.getString("teksti"));
                 stmtVastaus = conn.prepareStatement("DELETE FROM Vastaus WHERE kysymys_id=?");
                 stmtVastaus.setInt(1, kysymykset.getInt("id"));
                 rowsAffected = stmtVastaus.executeUpdate();
                 stmtVastaus.clearBatch();
-                System.out.println("Poistettiin " + rowsAffected + " vastausta");
             }
             
             stmtKysymys.clearBatch();
             stmtKysymys = conn.prepareStatement("DELETE FROM Kysymys WHERE kurssi_id=?");
             stmtKysymys.setInt(1, kurssiId);
             rowsAffected = stmtKysymys.executeUpdate();
-            System.out.println("Poistettiin " + rowsAffected + " kysymystä");
             
             stmtKurssi = conn.prepareStatement(
                     "DELETE FROM Kurssi WHERE id=?");
@@ -105,24 +109,21 @@ public class KurssiDao extends AbstractHt2Dao<Kurssi> implements Dao<Kurssi, Int
             if(rowsAffected != 1) {
                 throw new SQLException("Kurssin poistaminen epäonnistui");
             }
-            System.out.println("Poistettiin kurssi " + kurssiId);
-            conn.commit();
-            if (kurssit != null) kurssit.close();
-            if (kysymykset != null) kysymykset.close();
-            if (stmtVastaus != null) stmtVastaus.close();
-            if (stmtKysymys != null) stmtKysymys.close();
-            if (stmtKurssi != null) stmtKurssi.close();
-            if (conn != null) conn.close();
-             
+            
+            conn.commit();             
+            
         } catch (SQLException e) {
+            if (conn != null) conn.rollback();
+            System.out.println("SQL: " + e.getMessage());
+            throw e;
+        }  finally {
             if (kurssit != null) kurssit.close();
             if (kysymykset != null) kysymykset.close();
             if (stmtVastaus != null) stmtVastaus.close();
             if (stmtKysymys != null) stmtKysymys.close();
             if (stmtKurssi != null) stmtKurssi.close();
             if (conn != null) conn.close();
-            throw e;
-        }   
+        } 
     }
 
     @Override

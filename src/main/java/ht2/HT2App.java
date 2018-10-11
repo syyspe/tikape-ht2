@@ -134,12 +134,18 @@ public class HT2App {
             map.put("otsake", "Kysymykset ja vastaukset");
             map.put("lisaa", "Lisää uusi kysymys");
             try {
+                
                 List<Kysymys> kysymykset = kysymysDao.findAll();
                 List<Kurssi> kurssit = kurssiDao.findAll();
                 for (Kysymys kysymys : kysymykset) {
                     kysymys.setVastaukset(vastausDao.findByQuestionId(kysymys.getId()));
+                    kysymys.setKurssi(kurssit.stream()
+                            .filter(k -> k.getId() == kysymys.getKurssi_id())
+                            .findFirst()
+                            .orElse(null));
                 }
-                map.put("kysymykset", kysymykset);
+                
+                map.put("kysymykset", kysymykset); 
                 map.put("kurssit", kurssit);
             } catch (SQLException e) {
                 System.out.println("e: " + e.getMessage());
@@ -179,7 +185,6 @@ public class HT2App {
             
             } catch (SQLException e) {
                 System.out.println("SQL: " + e.getMessage());
-                e.printStackTrace();
                 e.printStackTrace();
                 res.redirect("/error");
                 return "";
@@ -225,7 +230,6 @@ public class HT2App {
                 }
                 
                 String oikein = req.queryParams("oikein");
-                System.out.println("oikein: " + oikein);
                 if(oikein == null || oikein.length() < 1) {
                     oikein = "0";
                 }

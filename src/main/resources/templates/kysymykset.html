@@ -65,7 +65,7 @@ and open the template in the editor.
                 </thead>
                 <tbody>
                     <tr th:each="kysymys : ${kysymykset}">
-                        <td th:text="${kysymys.kurssi_id}"></td>
+                        <td th:text="${kysymys.kurssi.nimi}"></td>
                         <td th:text="${kysymys.aihe}"></td>
                         <td th:text="${kysymys.teksti}"></td>
                         <td>

@@ -27,6 +27,7 @@ public abstract class AbstractHt2Dao<T extends AbstractHt2Object> implements Dao
     }
     
     public abstract T createFromRow(ResultSet row) throws SQLException;
+    public abstract String getOrdering();
 
     @Override
     public int getCount() throws SQLException {
@@ -83,7 +84,8 @@ public abstract class AbstractHt2Dao<T extends AbstractHt2Object> implements Dao
         
         try  {
             conn = db.getConnection();
-            stmt = conn.prepareStatement("SELECT * FROM " + tableName);
+            //stmt = conn.prepareStatement("SELECT * FROM " + tableName + " ORDER BY id DESC");
+            stmt = conn.prepareStatement("SELECT * FROM " + tableName + " " + getOrdering());
             rs = stmt.executeQuery();
           
             List<T> objects = new ArrayList<>();
