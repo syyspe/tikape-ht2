@@ -12,8 +12,9 @@ Sovellus löytyy tuolta
 ## [Kurssisivu](https://tikape-ht2.herokuapp.com/kurssit)
 
 Tällä sivulla palvelusta löytyvät kurssit ja niihin liittyvät kysymykset ovat taulukkomuodossa.
-* Klikkaa *Kysymykset* sarakkeesa olevia kysymyksiä nähdäksesi tallennetut vastausvaihtoehdot
-    * HUOM. Jos joku on poistanut kaikki kurssit taulukko on tyhjä :-|
+HUOM. Jos joku on poistanut kaikki kurssit taulukko on tyhjä :-| -> Lisää uusia kursseja -> :-)
+
+* Klikkaa *Kysymykset* -sarakkeessa olevia kysymyksiä nähdäksesi tallennetut vastausvaihtoehdot
 * Voit lisätä kurssin klikkaamalla sinertäväää **Lisää kurssi** -nappia
     * Anna kursille nimi ja tallenna klikkaamalla vihertävää levykettä
 * Voit poistaa kurssin klikkaamalla punertavaa roskista **Poista kurssi** -sarakkeessa
@@ -22,6 +23,7 @@ Tällä sivulla palvelusta löytyvät kurssit ja niihin liittyvät kysymykset ov
 ##  [Kysymys ja vastaus -sivu](https://tikape-ht2.herokuapp.com/kysymykset)
 
 Tällä sivulla voit lisätä/poistaa kysymyksiä ja vastauksia
+**HUOM.** Jos joku on poistanut kaikki kysymykset taulukko on tyhjä :-| -> Lisää uusia kysymyksiä -> :-)
 
 * Voit lisätä uuden kysymyksen klikkaamalla sinertävää **Lisää uusi kysymys** -nappia
     1. Valitse kurssi alasvetovalikosta
