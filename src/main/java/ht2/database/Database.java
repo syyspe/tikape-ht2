@@ -25,7 +25,8 @@ public class Database {
         } else {
             // Init the db if this is production env (Heroku)
             try {
-                /* Seems that the app is shut down by heroku automatically
+                /* 
+                *  Seems that the app is shut down by heroku automatically
                 *  after some idle period. In order to not overrun the db
                 *  contents in such cases, control the db initialization
                 *  with environment variable set in heroku env.
