@@ -10,10 +10,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.DriverManager;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 /**
  *
  * @author syyspe
@@ -28,7 +25,16 @@ public class Database {
         } else {
             // Init the db if this is production env (Heroku)
             try {
-                this.initDb();
+                /* Seems that the app is restarted by heroku automatically
+                *  after some idle period. In order to not overrun the db
+                *  contents in such cases, control the db initialization
+                *  with environment variable set in heroku env.
+                */
+                String initDb = System.getenv("HT2_INIT_DB");
+                System.out.println("HT2_INIT_DB=" + initDb);
+                if(initDb == null || initDb.equals("yes")) {
+                    this.initDb();
+                }
             } catch (SQLException e) {
                 System.out.println("SQL: " + e.getMessage());
             } catch (FileNotFoundException e) {
