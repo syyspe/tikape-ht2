@@ -1,8 +1,6 @@
 # Lyhyt käyttöohje
 
-Sovellus löytyy tuolta 
-(Jos kukaan ei ole käynyt hetkeen saattaa hiukan kestää kun Heroku uudelleenkäynnistää sen):
-[Linkki Herokuun](https://tikape-ht2.herokuapp.com/)
+**Sovellus poistettu Herokusta**
 
 ## [Pääsivu](https://tikape-ht2.herokuapp.com)
 
